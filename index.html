@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Google JS API Script (Geocode, Places)</title>
+</head>
+<body>
+
+  <form id="form" action="target.php" method="POST">
+    <select name="country">
+        <option value="" selected="selected">Country</option>
+        <option value="NL">Netherlands</option>
+        <option value="DE">Germany</option>
+        <option value="US">USA</option>
+        <option value="RU">Russia</option>
+    </select>
+    <input name="zipcode" type="text" value="" placeholder="zip code" />
+    <input type="button" name="lookup" value="lookup" />
+    <span name="result"></span>
+    <input type="submit" name="submit" disabled value="submit" />
+  </form>
+
+  <script src="./jquery.min.js"></script>
+  <script src="./GeoForm.js"></script>
+  <script>
+  GeoForm('#form', 'YOUR_API_KEY')
+  </script>
+
+</body>
+</html>
