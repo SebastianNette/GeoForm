@@ -6,6 +6,12 @@
 
   var $ = window.jQuery || window.$;
 
+  /**
+   * GeoForm
+   * 
+   * @param {String|DOMElement} form The id of the form
+   * @param {String} key The Geocode API Key
+   */
   window.GeoForm = function (form, key) {
 
     /* config */
@@ -22,9 +28,7 @@
       , $result = $form.find('span[name="result"]')
       , $submit = $form.find('input[name="submit"]');
 
-    /* flags and other */
-    var isQuerying = false
-      , cities_by_name = {}
+    var cities_by_name = {}
       , cities = [];
 
     // handle for submit
@@ -151,7 +155,8 @@
         key: API_KEY,
         components: "country:" + country + "|postal_code:" + zipcode,
         sensor: 'false',
-        address: address
+        address: address,
+        language: country
       };
 
       // ajax call
@@ -169,8 +174,6 @@
      */
     function lookup() {
 
-      if (isQuerying) return;
-
       var country = $country.val();
       var zipcode = $zipcode.val();
 
@@ -180,7 +183,6 @@
       } else if (!zipcode) {
         $result.text(ENTER_ZIPCODE);
       } else {
-        isQuerying = true;
         $submit.prop("disabled", true);
 
         geoQuery(country, zipcode, '', function(result) {
@@ -212,7 +214,6 @@
           // no other cities share the postcode, just render resultd
           if (!localities.length) {
             parseResults([ result ]);
-            isQuerying = false;
           }
 
           // collect all other cities
@@ -227,7 +228,6 @@
               }
               if (!localities.length) {
                 parseResults(mergedResults);
-                isQuerying = false;
               }
             }
 
